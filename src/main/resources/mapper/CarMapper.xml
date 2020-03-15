@@ -24,5 +24,8 @@
         values (null ,#{number}, #{load}, #{type}, #{capacity})
     </insert>
 
+    <select id="selectCar" resultType="Map">
+        select * from car
+    </select>
 
 </mapper>
