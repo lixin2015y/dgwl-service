@@ -1,5 +1,7 @@
 package com.dgwl.eo;
 
+import java.util.Date;
+
 public class Car {
 
     private Integer id;
@@ -11,6 +13,8 @@ public class Car {
     private String type;
 
     private Integer capacity;
+
+    private Date updateTime;
 
     public Integer getId() {
         return id;
@@ -50,5 +54,13 @@ public class Car {
 
     public void setCapacity(Integer capacity) {
         this.capacity = capacity;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }

@@ -12,6 +12,8 @@ public interface DgwlService {
     User getUser(String userName, String password);
 
 
-    List<Map> getCars();
+    List<Map> getCars(String number, String type, Integer load);
+
+    void addCar(Car car);
 
 }
