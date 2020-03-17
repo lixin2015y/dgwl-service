@@ -36,4 +36,9 @@ public class DgwlServiceImpl implements DgwlService {
     public void addCar(Car car) {
         carDao.insertCar(car);
     }
+
+    @Override
+    public void deleteCar(Integer id) {
+        carDao.deleteCar(id);
+    }
 }

@@ -12,4 +12,6 @@ public interface CarDao {
 
     List<Map> selectCar(@Param("number") String number, @Param("type") String type, @Param("load") Integer load);
 
+    void deleteCar(@Param("id") Integer id);
+
 }

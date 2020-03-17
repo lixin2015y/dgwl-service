@@ -5,6 +5,7 @@ import com.dgwl.common.Result;
 import com.dgwl.eo.Car;
 import com.dgwl.service.DgwlService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,5 +38,11 @@ public class CarController {
         dgwlService.addCar(car);
 
         return Result.success("添加成功！");
+    }
+
+    @PostMapping("deleteCar")
+    ResponseMessage deleteCar(@RequestParam Integer id) {
+        dgwlService.deleteCar(id);
+        return Result.success();
     }
 }

@@ -16,4 +16,6 @@ public interface DgwlService {
 
     void addCar(Car car);
 
+    void deleteCar(Integer id);
+
 }

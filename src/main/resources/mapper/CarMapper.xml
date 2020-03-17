@@ -19,6 +19,10 @@
         <if test="load!=null and load !=''">
             and `load` >= ${load}
         </if>
+        order by updateTime desc
     </select>
 
+    <delete id="deleteCar">
+        delete from car where id = ${id}
+    </delete>
 </mapper>
