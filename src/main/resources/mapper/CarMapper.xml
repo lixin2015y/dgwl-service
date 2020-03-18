@@ -25,4 +25,9 @@
     <delete id="deleteCar">
         delete from car where id = ${id}
     </delete>
+
+    <update id="updateCar" parameterType="Car">
+        update car set `number` = '${number}', `type` = '${type}', `load` = ${load}, capacity = ${capacity}
+        where id = ${id}
+    </update>
 </mapper>

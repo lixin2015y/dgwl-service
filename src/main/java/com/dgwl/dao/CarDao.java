@@ -14,4 +14,5 @@ public interface CarDao {
 
     void deleteCar(@Param("id") Integer id);
 
+    void updateCar(Car car);
 }

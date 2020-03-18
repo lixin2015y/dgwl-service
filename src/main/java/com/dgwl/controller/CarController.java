@@ -45,4 +45,10 @@ public class CarController {
         dgwlService.deleteCar(id);
         return Result.success();
     }
+
+    @PostMapping("editCar")
+    ResponseMessage editCar(Car car) {
+        dgwlService.editCar(car);
+        return Result.success();
+    }
 }
