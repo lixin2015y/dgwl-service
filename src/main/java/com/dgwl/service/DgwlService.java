@@ -1,6 +1,7 @@
 package com.dgwl.service;
 
 import com.dgwl.eo.Car;
+import com.dgwl.eo.Driver;
 import com.dgwl.eo.User;
 
 import java.util.List;
@@ -19,5 +20,9 @@ public interface DgwlService {
     void deleteCar(Integer id);
 
     void editCar(Car car);
+
+    List<Map> getDrivers(String name, Integer driveAge);
+
+    Integer addDriver(Driver driver);
 
 }
