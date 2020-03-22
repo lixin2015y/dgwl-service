@@ -1,0 +1,57 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dgwl.dao.HouseDao">
+
+    <resultMap id="selectAreaMap" type="Area">
+        <result property="value" column="t1Name"></result>
+        <result property="label" column="t1ShortName"></result>
+        <collection property="children" ofType="Area">
+            <result property="value" column="t2Name"></result>
+            <result property="label" column="t2ShortName"></result>
+            <collection property="children" ofType="Area">
+                <result property="value" column="t3Name"></result>
+                <result property="label" column="t3ShortName"></result>
+            </collection>
+        </collection>
+    </resultMap>
+    <select id="selectArea" resultMap="selectAreaMap">
+        SELECT
+            t1.name as t1Name,t1.shortname as t1ShortName,
+            t2.name as t2Name,t2.shortname as t2ShortName,
+            t3.name as t3Name,t3.shortname as t3ShortName
+        from
+        (SELECT * FROM `area` WHERE pid = 0) t1
+        LEFT JOIN (SELECT * FROM `area` WHERE level = 2) t2 on (t1.id = t2.pid)
+        LEFT JOIN (SELECT * FROM `area` WHERE level = 3) t3 on (t2.id = t3.pid)
+        ORDER BY t1.sort
+    </select>
+
+    <insert id="insertHouse" parameterType="House">
+        insert into house(id,name,address,cover,tel)
+        values (null, '${name}', '${address}', ${cover}, ${tel})
+    </insert>
+
+    <select id="selectHouse" resultType="Map">
+        select id as id, name as name, address as address,cover as cover, tel as tel,
+        DATE_FORMAT(t1.updateTime,'%Y-%m-%d') as updateTime
+        from house t1
+        where 1=1
+        <if test="name!=null and name !=''">
+            and t1.name like '%${name}%'
+        </if>
+        <if test="address!=null and address !=''">
+            and t1.address like '%${address}%'
+        </if>
+        <if test="cover!=null">
+            and t1.cover >= ${cover}
+        </if>
+    </select>
+
+    <update id="updateHouse" parameterType="House">
+        update house set name='${name}', address = '${address}', cover = ${cover}, tel = ${tel}
+        where id = ${id}
+    </update>
+
+    <delete id="deleteHouse">
+        delete from house where id = ${value}
+    </delete>
+</mapper>

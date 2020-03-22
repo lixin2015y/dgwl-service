@@ -1,6 +1,6 @@
 package com.dgwl.dao;
 
-import com.dgwl.eo.Car;
+import com.dgwl.eo.Area;
 import com.dgwl.eo.Driver;
 import org.apache.ibatis.annotations.Param;
 
@@ -13,7 +13,9 @@ public interface DriverDao {
 
     List<Map> selectDriver(@Param("name") String name, @Param("driveAge") Integer driveAge);
 
-//    void deleteCar(@Param("id") Integer id);
-//
-//    void updateCar(Car car);
+    Integer updateDriver(Driver driver);
+
+    Integer deleteDriver(Integer id);
+
+
 }

@@ -16,7 +16,7 @@ public class Driver {
 
     private Integer driveAge;
 
-    private Date updateTime;
+    private String updateTime;
 
     private Integer carId;
 
@@ -68,11 +68,11 @@ public class Driver {
         this.driveAge = driveAge;
     }
 
-    public Date getUpdateTime() {
+    public String getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
     }
 

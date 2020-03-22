@@ -22,6 +22,23 @@
         order by updateTime desc
     </select>
 
+    <select id="selectLeaveCar" resultType="Map">
+        select car.id,car.number, car.`load`, car.`type`, car.capacity, DATE_FORMAT(car.updateTime,'%Y-%m-%d') as updateTime
+        from car left join driver on (car.id = driver.carId )
+        WHERE 1=1
+        <if test="number!=null and number !=''">
+            and car.`number` = '${number}'
+        </if>
+        <if test="type!=null and type !=''">
+            and car.`type` = '${type}'
+        </if>
+        <if test="load!=null and load !=''">
+            and car.`load` >= ${load}
+        </if>
+        and driver.id is null
+        order by updateTime desc
+    </select>
+
     <delete id="deleteCar">
         delete from car where id = ${id}
     </delete>

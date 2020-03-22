@@ -12,6 +12,8 @@ public interface CarDao {
 
     List<Map> selectCar(@Param("number") String number, @Param("type") String type, @Param("load") Integer load);
 
+    List<Map> selectLeaveCar(@Param("number") String number, @Param("type") String type, @Param("load") Integer load);
+
     void deleteCar(@Param("id") Integer id);
 
     void updateCar(Car car);

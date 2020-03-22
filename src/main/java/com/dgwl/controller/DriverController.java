@@ -27,13 +27,25 @@ public class DriverController {
     ResponseMessage getCars(@RequestParam String name, @RequestParam Integer driveAge) {
         final HashMap map = new HashMap();
         map.put("driverData", dgwlService.getDrivers(name, driveAge));
-        map.put("carData", dgwlService.getCars("", "", null));
+        map.put("carData", dgwlService.getLeaveCars("", "", null));
         return Result.success(map);
     }
 
     @PostMapping("addDriver")
     ResponseMessage addDriver(Driver driver) {
         dgwlService.addDriver(driver);
+        return Result.success();
+    }
+
+    @PostMapping("editDriver")
+    ResponseMessage updateDriver(Driver driver) {
+        dgwlService.updateDriver(driver);
+        return Result.success();
+    }
+
+    @PostMapping("deleteDriver")
+    ResponseMessage deleteDriver(@RequestParam Integer id) {
+        dgwlService.deleteDriver(id);
         return Result.success();
     }
 

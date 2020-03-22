@@ -44,6 +44,14 @@ public class UserController {
         return Result.success(hostHolder.getUser());
     }
 
+    @PostMapping("editUser")
+    ResponseMessage editUser(User user) {
+        if (dgwlService.editUser(user) > 0) {
+            return Result.success();
+        } else {
+            return Result.error();
+        }
+    }
 
 
 }
