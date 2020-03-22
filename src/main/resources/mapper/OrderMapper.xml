@@ -1,0 +1,15 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dgwl.dao.OrderDao">
+
+    <select id="selectMyOrder" resultType="Map">
+        select * from user left join role on (user.roleId = role.id)
+        where username = '${userName}' AND password = '${password}'
+    </select>
+
+    <insert id="insertOrder">
+        insert into `order`(id,`to`,goodsName,goodsWeight,userId)
+        values (null ,'${to}','${goodsName}',${goodsWeight},${userId} )
+    </insert>
+
+
+</mapper>

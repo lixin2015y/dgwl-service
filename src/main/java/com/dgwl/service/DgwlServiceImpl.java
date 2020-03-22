@@ -1,9 +1,6 @@
 package com.dgwl.service;
 
-import com.dgwl.dao.CarDao;
-import com.dgwl.dao.DriverDao;
-import com.dgwl.dao.HouseDao;
-import com.dgwl.dao.UserDao;
+import com.dgwl.dao.*;
 import com.dgwl.eo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +25,9 @@ public class DgwlServiceImpl implements DgwlService {
 
     @Autowired
     HouseDao houseDao;
+
+    @Autowired
+    OrderDao orderDao;
 
     public User getUser(String userName, String password) {
         return userDao.selectUser(userName, password);
@@ -108,5 +108,15 @@ public class DgwlServiceImpl implements DgwlService {
     @Override
     public Integer editUser(User user) {
         return userDao.updateUser(user);
+    }
+
+    @Override
+    public List<Map> getMyOrder() {
+        return orderDao.selectMyOrder();
+    }
+
+    @Override
+    public Integer addOrder(Order order) {
+        return orderDao.insertOrder(order);
     }
 }

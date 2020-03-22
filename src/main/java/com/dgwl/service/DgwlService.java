@@ -41,4 +41,8 @@ public interface DgwlService {
 
     Integer editUser(User user);
 
+    List<Map> getMyOrder();
+
+    Integer addOrder(Order order);
+
 }
