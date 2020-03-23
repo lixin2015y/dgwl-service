@@ -111,12 +111,17 @@ public class DgwlServiceImpl implements DgwlService {
     }
 
     @Override
-    public List<Map> getMyOrder() {
-        return orderDao.selectMyOrder();
+    public List<Map> getMyOrder(Integer userId) {
+        return orderDao.selectMyOrder(userId);
     }
 
     @Override
     public Integer addOrder(Order order) {
         return orderDao.insertOrder(order);
+    }
+
+    @Override
+    public Map getPosition(String name) {
+        return orderDao.selectPosition(name).get(0);
     }
 }

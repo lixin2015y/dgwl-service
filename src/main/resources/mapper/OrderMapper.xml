@@ -2,14 +2,24 @@
 <mapper namespace="com.dgwl.dao.OrderDao">
 
     <select id="selectMyOrder" resultType="Map">
-        select * from user left join role on (user.roleId = role.id)
-        where username = '${userName}' AND password = '${password}'
+        select t1.id as id, t1.`to` as `to`,t1.goodsName as goodsName, t1.goodsWeight as goodsWeight,
+        t1.status as status, t1.price as price,DATE_FORMAT(t1.updateTime,'%Y-%m-%d') as updateTime,
+        case when t1.driverId is null then '未分配' else t2.name end as 'driverName',
+        case when t2.carId is null then '未分配' else t3.number end as 'carNumber'
+        from `order`  t1 left join driver t2 on (t1.driverId = t2.id)
+        left join car t3 on (t2.carId = t3 .id)
+        where userid = ${value}
+        order by updateTime desc
     </select>
 
     <insert id="insertOrder">
-        insert into `order`(id,`to`,goodsName,goodsWeight,userId)
-        values (null ,'${to}','${goodsName}',${goodsWeight},${userId} )
+        insert into `order`(id,`to`,goodsName,goodsWeight,userId,status,goodsCapacity,price)
+        values (null ,'${to}','${goodsName}',${goodsWeight},${userId}, '已提交订单',${goodsCapacity},'${price}' )
     </insert>
+
+    <select id="selectPosition" resultType="Map">
+        select * from area where name = '${name}' and level = 3
+    </select>
 
 
 </mapper>

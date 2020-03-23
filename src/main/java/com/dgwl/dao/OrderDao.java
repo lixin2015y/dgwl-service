@@ -10,7 +10,9 @@ import java.util.Map;
 
 public interface OrderDao {
 
-    List<Map> selectMyOrder();
+    List<Map> selectMyOrder(Integer userId);
 
     Integer insertOrder(Order order);
+
+    List<Map> selectPosition(@Param("name") String name);
 }

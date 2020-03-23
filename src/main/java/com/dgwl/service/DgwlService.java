@@ -1,6 +1,7 @@
 package com.dgwl.service;
 
 import com.dgwl.eo.*;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -41,8 +42,12 @@ public interface DgwlService {
 
     Integer editUser(User user);
 
-    List<Map> getMyOrder();
+    List<Map> getMyOrder(Integer userId);
 
     Integer addOrder(Order order);
+
+    Map getPosition(String name);
+
+
 
 }

@@ -12,13 +12,23 @@ public class Order {
 
     private Double goodsWeight;
 
+    private Double goodsCapacity;
+
     private String status;
 
-    private Double price;
+    private String price;
 
     private Integer userId;
 
     private String updateTime;
+
+    public Double getGoodsCapacity() {
+        return goodsCapacity;
+    }
+
+    public void setGoodsCapacity(Double goodsCapacity) {
+        this.goodsCapacity = goodsCapacity;
+    }
 
     public Integer getId() {
         return id;
@@ -60,11 +70,11 @@ public class Order {
         this.status = status;
     }
 
-    public Double getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 
@@ -82,5 +92,20 @@ public class Order {
 
     public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", to='" + to + '\'' +
+                ", goodsName='" + goodsName + '\'' +
+                ", goodsWeight=" + goodsWeight +
+                ", goodsCapacity=" + goodsCapacity +
+                ", status='" + status + '\'' +
+                ", price=" + price +
+                ", userId=" + userId +
+                ", updateTime='" + updateTime + '\'' +
+                '}';
     }
 }
