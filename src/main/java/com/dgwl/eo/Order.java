@@ -22,6 +22,38 @@ public class Order {
 
     private String updateTime;
 
+    private String method;
+
+    private Integer houseId;
+
+
+    private Integer driverId;
+
+
+    public Integer getDriverId() {
+        return driverId;
+    }
+
+    public void setDriverId(Integer driverId) {
+        this.driverId = driverId;
+    }
+
+    public Integer getHouseId() {
+        return houseId;
+    }
+
+    public void setHouseId(Integer houseId) {
+        this.houseId = houseId;
+    }
+
+    public String getMethod() {
+        return method;
+    }
+
+    public void setMethod(String method) {
+        this.method = method;
+    }
+
     public Double getGoodsCapacity() {
         return goodsCapacity;
     }
@@ -103,9 +135,11 @@ public class Order {
                 ", goodsWeight=" + goodsWeight +
                 ", goodsCapacity=" + goodsCapacity +
                 ", status='" + status + '\'' +
-                ", price=" + price +
+                ", price='" + price + '\'' +
                 ", userId=" + userId +
                 ", updateTime='" + updateTime + '\'' +
+                ", method='" + method + '\'' +
+                ", houseId=" + houseId +
                 '}';
     }
 }

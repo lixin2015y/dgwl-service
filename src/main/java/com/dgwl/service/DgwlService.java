@@ -2,6 +2,7 @@ package com.dgwl.service;
 
 import com.dgwl.eo.*;
 import org.apache.ibatis.annotations.Param;
+import org.mockito.internal.matchers.Or;
 
 import java.util.List;
 import java.util.Map;
@@ -44,10 +45,20 @@ public interface DgwlService {
 
     List<Map> getMyOrder(Integer userId);
 
+    List<Map> getAllOrder();
+
     Integer addOrder(Order order);
 
     Map getPosition(String name);
 
+    Integer deleteOrder(Integer id);
+
+    Map getDriversAndHouse();
+
+    Integer deliverGoods(Order order);
 
 
+    List<Map> getOrderInHouse(Integer houseId);
+
+    Integer handleOrder(Order order);
 }

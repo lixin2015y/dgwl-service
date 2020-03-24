@@ -7,6 +7,7 @@ import com.dgwl.eo.Order;
 import com.dgwl.eo.User;
 import com.dgwl.model.HostHolder;
 import com.dgwl.service.DgwlService;
+import org.apache.ibatis.annotations.Results;
 import org.omg.CORBA.ORB;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,6 +46,7 @@ public class OrderController {
         final Double latitude = Double.parseDouble(position.get("latitude").toString());
         final double distance = (longitude - 117.190186) * (longitude - 117.190186) + (latitude - 39.125595) * (latitude - 39.125595);
         DecimalFormat df = new DecimalFormat("#.00");
+        //开根号
         double k = 1.0;
         while (Math.abs(k * k - distance) > 1e-5) {
             k = (k + distance / k) / 2;
@@ -56,14 +58,37 @@ public class OrderController {
         return Result.success();
     }
 
-//    @PostMapping("editUser")
-//    ResponseMessage editUser(User user) {
-//        if (dgwlService.editUser(user) > 0) {
-//            return Result.success();
-//        } else {
-//            return Result.error();
-//        }
-//    }
+    @PostMapping("getAllOrder")
+    ResponseMessage getAllOrder() {
+        return Result.success(dgwlService.getAllOrder());
+    }
+
+    @PostMapping("deleteOrder")
+    ResponseMessage deleteOrder(@RequestParam Integer id) {
+        return dgwlService.deleteOrder(id) > 0 ? Result.success() : Result.error();
+    }
+
+
+    @PostMapping("getDriversAndHouse")
+    ResponseMessage getDriversAndHouse() {
+        return Result.success(dgwlService.getDriversAndHouse());
+    }
+
+    @PostMapping("deliverGoods")
+    ResponseMessage deliverGoods(Order order) {
+        return dgwlService.deliverGoods(order) > 0 ? Result.success() : Result.error();
+    }
+
+    @PostMapping("getOrderInHouse")
+    ResponseMessage getOrderInHouse(@RequestParam Integer houseId) {
+        return Result.success(dgwlService.getOrderInHouse(houseId));
+    }
+
+
+    @PostMapping("handleOrder")
+    ResponseMessage handleOrder(Order order) {
+        return dgwlService.handleOrder(order) > 0 ? Result.success(dgwlService.getOrderInHouse(order.getHouseId())) : null;
+    }
 
 
 }

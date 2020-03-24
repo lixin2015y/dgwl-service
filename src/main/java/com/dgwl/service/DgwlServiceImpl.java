@@ -5,6 +5,7 @@ import com.dgwl.eo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -116,6 +117,11 @@ public class DgwlServiceImpl implements DgwlService {
     }
 
     @Override
+    public List<Map> getAllOrder() {
+        return orderDao.selectAllOrder();
+    }
+
+    @Override
     public Integer addOrder(Order order) {
         return orderDao.insertOrder(order);
     }
@@ -123,5 +129,33 @@ public class DgwlServiceImpl implements DgwlService {
     @Override
     public Map getPosition(String name) {
         return orderDao.selectPosition(name).get(0);
+    }
+
+    @Override
+    public Integer deleteOrder(Integer id) {
+        return orderDao.deleteOrder(id);
+    }
+
+    @Override
+    public Map getDriversAndHouse() {
+        Map map = new HashMap();
+        map.put("driverData", orderDao.selectAvailableDriver());
+        map.put("houseData", houseDao.selectHouse(null, null, null));
+        return map;
+    }
+
+    @Override
+    public Integer deliverGoods(Order order) {
+        return orderDao.deliverGoods(order);
+    }
+
+    @Override
+    public List<Map> getOrderInHouse(Integer houseId) {
+        return orderDao.selectOrderInHouse(houseId);
+    }
+
+    @Override
+    public Integer handleOrder(Order order) {
+        return orderDao.updateOrder(order);
     }
 }
