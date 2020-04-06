@@ -1,9 +1,9 @@
 package com.dgwl.service;
 
 import com.dgwl.eo.*;
-import org.apache.ibatis.annotations.Param;
-import org.mockito.internal.matchers.Or;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Map;
 
@@ -61,4 +61,12 @@ public interface DgwlService {
     List<Map> getOrderInHouse(Integer houseId);
 
     Integer handleOrder(Order order);
+
+
+    void handleOrder() throws IOException, URISyntaxException, InterruptedException;
+
+
+    Integer checkUserName(String userName);
+
+    void reg(String userName,String password);
 }

@@ -2,9 +2,21 @@ package com.dgwl.service;
 
 import com.dgwl.dao.*;
 import com.dgwl.eo.*;
+import com.dgwl.util.HadoopFileUtil;
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FSDataOutputStream;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -157,5 +169,46 @@ public class DgwlServiceImpl implements DgwlService {
     @Override
     public Integer handleOrder(Order order) {
         return orderDao.updateOrder(order);
+    }
+
+    @Override
+    public void handleOrder() throws IOException, URISyntaxException, InterruptedException {
+
+//        final List<Map> maps = orderDao.selectAllFinishOrder();
+//        System.out.println(maps.get(0).keySet());
+//        String[] keys = {"houseId", "method", "updateTime", "userName", "goodsWeight", "carNumber", "goodsCapacity", "price", "driverName", "id", "to", "goodsName", "status"};
+//        final List<String> lines = new ArrayList<>();
+//        maps.stream().forEach(map -> lines.add(HadoopFileUtil.getLine(map, keys)));
+//        HadoopFileUtil.WriteToHDFS("hdfs://39.97.109.70:9000/dgwl/order/orderdata.txt",lines);
+
+        // 1 获取文件系统
+        Configuration configuration = new Configuration();
+        FileSystem fs = FileSystem.get(new URI("hdfs://39.97.109.70:9000"), configuration, "hadoop");
+
+        // 2 创建输入流
+        FileInputStream fis = new FileInputStream(new File("e:/banhua.txt"));
+
+        // 3 获取输出流
+        FSDataOutputStream fos = fs.create(new Path("/banhua.txt"));
+
+        // 4 流对拷
+        IOUtils.copyBytes(fis, fos, configuration);
+
+        // 5 关闭资源
+        IOUtils.closeStream(fos);
+        IOUtils.closeStream(fis);
+        fs.close();
+
+
+    }
+
+    @Override
+    public Integer checkUserName(String userName) {
+        return userDao.checkUserName(userName);
+    }
+
+    @Override
+    public void reg(String userName, String password) {
+        userDao.insertUser(userName, password);
     }
 }

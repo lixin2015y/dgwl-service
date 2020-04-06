@@ -10,4 +10,8 @@ public interface UserDao {
 
     Integer updateUser(User user);
 
+
+    Integer checkUserName(@Param("userName") String userName);
+
+    void insertUser(@Param("userName") String userName, @Param("password") String password);
 }

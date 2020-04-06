@@ -24,4 +24,13 @@
         where id = ${id}
     </update>
 
+
+    <select id="checkUserName" resultType="Integer">
+        select count(id) from `user` where userName ='${userName}'
+    </select>
+
+    <insert id="insertUser">
+        insert into `user`(id,userName,password,roleId,address)
+        values (null ,'${userName}','${password}',2,'北京市-北京市-西城区')
+    </insert>
 </mapper>

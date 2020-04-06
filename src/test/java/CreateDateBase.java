@@ -1,12 +1,19 @@
 import com.dgwl.App;
 import com.dgwl.dao.CarDao;
+import com.dgwl.dao.UserDao;
 import com.dgwl.eo.Car;
+import com.dgwl.service.DgwlService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.annotation.Resource;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.UUID;
 
 @RunWith(SpringRunner.class)
@@ -27,6 +34,34 @@ public class CreateDateBase {
             car.setCapacity(i % 15 + 1);
             carDao.insertCar(car);
         }
+    }
+
+    @Autowired
+    @Qualifier("hiveJdbcTemplate")
+    JdbcTemplate hiveJdbcTemplate;
+
+    @Test
+    public void test2() {
+        String sql = "select count(*) from dgwl.test";
+        final Integer integer = hiveJdbcTemplate.queryForObject(sql, Integer.class);
+        System.out.println("integer = " + integer);
+    }
+
+    @Resource
+    DgwlService dgwlService;
+
+    @Test
+    public void test() throws IOException, URISyntaxException, InterruptedException {
+        dgwlService.handleOrder();
+    }
+
+    @Resource
+    UserDao userDao;
+
+    @Test
+    public void test3(){
+        final Integer integer = userDao.checkUserName("daming");
+        System.out.println("integer = " + integer);
     }
 
 }

@@ -38,6 +38,20 @@ public class UserController {
         return Result.success(sessionId);
     }
 
+    @PostMapping("reg")
+    ResponseMessage reg(@RequestParam String userName, @RequestParam String password) {
+
+        Integer integer = dgwlService.checkUserName(userName);
+
+        if (integer != null && integer > 0) {
+            return Result.error("用户名已存在");
+        }
+
+        dgwlService.reg(userName, password);
+
+        return Result.success();
+    }
+
 
     @PostMapping("getUser")
     ResponseMessage getUser() {

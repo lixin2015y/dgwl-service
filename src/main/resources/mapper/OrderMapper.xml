@@ -42,7 +42,7 @@
     </delete>
 
     <select id="selectAvailableDriver" resultType="Map">
-        select * from driver where id not in (select IFNULL(driverId,0)from `ORDER` where status !='已完成')
+        select * from driver where id not in (select IFNULL(driverId,0)from `order` where status !='已完成')
         and carId !=0
     </select>
 
@@ -70,5 +70,19 @@
         update `order` set status = '${status}' where id = ${id}
     </update>
 
+    <select id="selectAllFinishOrder" resultType="Map">
+        select t1.id as id, t1.`to` as `to`,t1.goodsName as goodsName, t1.goodsWeight as goodsWeight,
+        t1.status as status, t1.price as price,DATE_FORMAT(t1.updateTime,'%Y-%m-%d') as updateTime,
+        goodsCapacity as goodsCapacity ,t1.houseId as houseId,
+        case when t1.driverId is null then '未分配' else t2.name end as 'driverName',
+        case when t2.carId is null or t2.carId = '' then '未分配' else t3.number end as 'carNumber',
+        t4.userName as userName,
+        case when t1.method is null then '未分配' else t1.method end as method
+        from `order`  t1 left join driver t2 on (t1.driverId = t2.id)
+        left join car t3 on (t2.carId = t3 .id)
+        left join user t4 on (t1.userId = t4 .id)
+        where status ='已完成'
+        order by updateTime desc
+    </select>
 
 </mapper>
