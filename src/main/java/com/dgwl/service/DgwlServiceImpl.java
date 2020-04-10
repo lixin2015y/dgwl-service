@@ -171,35 +171,32 @@ public class DgwlServiceImpl implements DgwlService {
         return orderDao.updateOrder(order);
     }
 
+
+    /**
+     * 虚拟机断网问题
+     * chkconfig NetworkManager off
+     * <p>
+     * chkconfig network on
+     * <p>
+     * service NetworkManager stop
+     * <p>
+     * service network start
+     * <p>
+     * /etc/init.d/network restart
+     *
+     * @throws IOException
+     * @throws URISyntaxException
+     * @throws InterruptedException
+     */
     @Override
     public void handleOrder() throws IOException, URISyntaxException, InterruptedException {
 
-//        final List<Map> maps = orderDao.selectAllFinishOrder();
-//        System.out.println(maps.get(0).keySet());
-//        String[] keys = {"houseId", "method", "updateTime", "userName", "goodsWeight", "carNumber", "goodsCapacity", "price", "driverName", "id", "to", "goodsName", "status"};
-//        final List<String> lines = new ArrayList<>();
-//        maps.stream().forEach(map -> lines.add(HadoopFileUtil.getLine(map, keys)));
-//        HadoopFileUtil.WriteToHDFS("hdfs://39.97.109.70:9000/dgwl/order/orderdata.txt",lines);
-
-        // 1 获取文件系统
-        Configuration configuration = new Configuration();
-        FileSystem fs = FileSystem.get(new URI("hdfs://39.97.109.70:9000"), configuration, "hadoop");
-
-        // 2 创建输入流
-        FileInputStream fis = new FileInputStream(new File("e:/banhua.txt"));
-
-        // 3 获取输出流
-        FSDataOutputStream fos = fs.create(new Path("/banhua.txt"));
-
-        // 4 流对拷
-        IOUtils.copyBytes(fis, fos, configuration);
-
-        // 5 关闭资源
-        IOUtils.closeStream(fos);
-        IOUtils.closeStream(fis);
-        fs.close();
-
-
+        final List<Map> maps = orderDao.selectAllFinishOrder();
+        System.out.println(maps.get(0).keySet());
+        String[] keys = {"houseId", "method", "updateTime", "userName", "goodsWeight", "carNumber", "goodsCapacity", "price", "driverName", "id", "to", "goodsName", "status"};
+        final List<String> lines = new ArrayList<>();
+        maps.stream().forEach(map -> lines.add(HadoopFileUtil.getLine(map, keys)));
+        HadoopFileUtil.WriteToHDFS("hdfs://hadoop101:9000/dgwl/order/orderdata.txt", lines);
     }
 
     @Override

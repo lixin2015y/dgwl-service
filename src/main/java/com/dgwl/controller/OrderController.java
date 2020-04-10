@@ -7,17 +7,29 @@ import com.dgwl.eo.Order;
 import com.dgwl.eo.User;
 import com.dgwl.model.HostHolder;
 import com.dgwl.service.DgwlService;
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FSDataInputStream;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.IOUtils;
 import org.apache.ibatis.annotations.Results;
 import org.omg.CORBA.ORB;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.URI;
 import java.text.DecimalFormat;
+import java.util.List;
 import java.util.Map;
 
 @RequestMapping("order")
@@ -29,6 +41,9 @@ public class OrderController {
 
     @Autowired
     DgwlService dgwlService;
+
+    @Resource
+    JdbcTemplate hiveJdbcTemplate;
 
     @PostMapping("getMyOrder")
     ResponseMessage getMyOrder() {
@@ -88,6 +103,13 @@ public class OrderController {
     @PostMapping("handleOrder")
     ResponseMessage handleOrder(Order order) {
         return dgwlService.handleOrder(order) > 0 ? Result.success(dgwlService.getOrderInHouse(order.getHouseId())) : null;
+    }
+
+    @PostMapping("getOrderCount")
+    ResponseMessage getOrderCount() throws IOException {
+        String sql = "select month,count from dgwl.orderresult";
+        final List<Map<String, Object>> maps = hiveJdbcTemplate.queryForList(sql);
+        return Result.success(maps);
     }
 
 

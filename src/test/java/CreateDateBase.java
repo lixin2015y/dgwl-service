@@ -60,8 +60,7 @@ public class CreateDateBase {
 
     @Test
     public void test3(){
-        final Integer integer = userDao.checkUserName("daming");
-        System.out.println("integer = " + integer);
+
     }
 
 }
