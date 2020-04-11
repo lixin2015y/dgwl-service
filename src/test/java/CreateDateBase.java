@@ -14,6 +14,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RunWith(SpringRunner.class)
@@ -60,7 +62,9 @@ public class CreateDateBase {
 
     @Test
     public void test3(){
-
+        String sql = "select month,count from dgwl.orderresult";
+        final List<Map<String, Object>> maps = hiveJdbcTemplate.queryForList(sql);
+        System.out.println(maps);
     }
 
 }
